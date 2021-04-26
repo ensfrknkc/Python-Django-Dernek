@@ -9,7 +9,7 @@ class MenuAdmin(admin.ModelAdmin):
     list_filter = ['status']
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ['title' , 'type', 'status']
+    list_display = ['title' , 'type', 'status','user']
     list_filter = ['status' , 'type']
 
 admin.site.register(Menu,MenuAdmin)

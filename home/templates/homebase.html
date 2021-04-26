@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+     {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{% block title %} Django Dernek Sitesi{% endblock %}</title>
+    <meta name="keywords" content="{% block keywords %} Anasayfa anahtar kelimeleri {% endblock %}">
+    <meta name="description" content="{% block description %} Anasayfa kısa açıklama {% endblock %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/animate.css'%}">
+
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css'%}">
+
+    <link rel="stylesheet" href="{% static 'css/flaticon.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    {% block head %} {% endblock %}
+  </head>
+
+  <body>
+    {% include 'header.html' %}
+    {% block navbar %}  {% endblock %}
+
+    {% block slider %}  {% endblock %}
+
+    {% block content %}  {% endblock %}
+
+    {% include 'footer.html' %}
+
+    {% block foot %} {% endblock %}
+  </body>
+</html>
