@@ -2,6 +2,9 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+from django.utils.safestring import mark_safe
+
+
 class Menu(models.Model):
     STATUS = (
         ('True', 'Evet'),
@@ -19,6 +22,9 @@ class Menu(models.Model):
 
     def __str__(self):
         return self.title
+    def image_tag(self):
+        return mark_safe('<img src="{}" height="50" width="50"/>'.format(self.image.url))
+    image_tag.short_description = 'Image'
 
 class Content(models.Model):
     STATUS = (
@@ -32,7 +38,7 @@ class Content(models.Model):
     )
     menu = models.OneToOneField(Menu, on_delete=models.CASCADE,primary_key=True,) #relation with Menu
     user = models.ForeignKey(User, on_delete=models.CASCADE,)  # relation with User
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=100)
     keywords = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
@@ -43,3 +49,17 @@ class Content(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.title
+    def image_tag(self):
+        return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+    image_tag.short_description = 'Image'
+
+class Images(models.Model):
+    content=models.ForeignKey(Content,on_delete=models.CASCADE)
+    title = models.CharField(max_length=50,blank=True)
+    image = models.ImageField(blank=True, upload_to='images/')
+    def __str__(self):
+        return self.title
+    def image_tag(self):
+        return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+    image_tag.short_description = 'Image'
+
