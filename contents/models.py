@@ -3,6 +3,8 @@ from django.db import models
 
 # Create your models here.
 from django.utils.safestring import mark_safe
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 
 class Menu(models.Model):
@@ -42,7 +44,7 @@ class Content(models.Model):
     keywords = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
-    detail = models.TextField()
+    detail = RichTextUploadingField()
     type = models.CharField(max_length=10, choices=TYPE)
     status = models.CharField(max_length=10, choices=STATUS)
     create_at = models.DateTimeField(auto_now_add=True)

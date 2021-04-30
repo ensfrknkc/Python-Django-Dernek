@@ -1,9 +1,9 @@
 {% extends "homebase.html" %}
 
-{% block title %}İndex Sayfası{% endblock %}
-{% block keywords %}İndex Sayfası anahtar kelimeler{% endblock %}
-{% block description %}İndex Sayfası açıklama{% endblock %}
-
+{% block title %}{{setting.title}}{% endblock %}
+{% block keywords %}{{setting.keywords}}{% endblock %}
+{% block description %}{{setting.description}}{% endblock %}
+{% block favicon %} {{ setting.icon.url }}{% endblock %}
 
 {% block slider %}
     {% include "slider.html" %}
