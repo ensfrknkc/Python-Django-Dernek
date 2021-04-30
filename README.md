@@ -1,1 +1,2 @@
-"# Python-Django-Dernek Projesi"  
+# Python-Django-Dernek 
+## Developed by Enes Furkan KOÇ
