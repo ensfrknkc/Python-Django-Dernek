@@ -41,9 +41,10 @@ class Content(models.Model):
     menu = models.OneToOneField(Menu, on_delete=models.CASCADE,primary_key=True,) #relation with Menu
     user = models.ForeignKey(User, on_delete=models.CASCADE,)  # relation with User
     title = models.CharField(max_length=100)
-    keywords = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    keywords = models.CharField(blank=True,max_length=255)
+    description = models.CharField(blank=True,max_length=255)
     image = models.ImageField(blank=True, upload_to='images/')
+    slug = models.SlugField(blank=True, max_length=100)
     detail = RichTextUploadingField()
     type = models.CharField(max_length=10, choices=TYPE)
     status = models.CharField(max_length=10, choices=STATUS)

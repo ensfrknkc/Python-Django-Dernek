@@ -144,7 +144,9 @@ ul {
   background: #1cc3b2;
   height: 30px;
   line-height: 30px; }
-
+.deneme{
+    color: #000000 !important;
+}
 button.mfp-close,
 button.mfp-arrow {
   background: #1cc3b2; }
@@ -1839,6 +1841,7 @@ html .ui-button.ui-state-disabled:active {
   .roberto-contact-form textarea.form-control {
     height: 150px;
     padding: 20px; }
+
 
 .google-maps-contact-info {
   position: relative;

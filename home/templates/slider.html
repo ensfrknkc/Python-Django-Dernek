@@ -3,9 +3,10 @@
 <section class="welcome-area">
     <div class="welcome-slides owl-carousel">
         <!-- Single Welcome Slide -->
+        {% for rs in sliderdata %}
         <div class="single-welcome-slide bg-img bg-overlay"
-             style="background-image: url({% static 'img/bg-img/16.jpg' %});"
-             data-img-url="{% static 'img/bg-img/16.jpg' %}">
+             style="background-image: url('{{ rs.image.url }}');"
+             data-img-url="{{ rs.image.url }}">
             <!-- Welcome Content -->
             <div class="welcome-content h-100">
                 <div class="container h-100">
@@ -13,60 +14,19 @@
                         <!-- Welcome Text -->
                         <div class="col-12">
                             <div class="welcome-text text-center">
-                                <h6 data-animation="fadeInLeft" data-delay="200ms">Hotel &amp; Resort</h6>
-                                <h2 data-animation="fadeInLeft" data-delay="500ms">Welcome To Roberto</h2>
-                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft"
-                                   data-delay="800ms">Discover Now</a>
+                                <h6 data-animation="fadeInLeft" data-delay="200ms">{{ rs.description }}</h6>
+                                <h2 data-animation="fadeInLeft" data-delay="500ms">{{ rs.title }}</h2>
+                                <a href="/content/{{ rs.id }}/{{ rs.slug }}" class="btn roberto-btn btn-2" data-animation="fadeInLeft"
+                                   data-delay="800ms">Detay</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
 
-        <!-- Single Welcome Slide -->
-        <div class="single-welcome-slide bg-img bg-overlay"
-             style="background-image: url({% static 'img/bg-img/17.jpg' %});"
-             data-img-url="{% static 'img/bg-img/17.jpg' %}">
-            <!-- Welcome Content -->
-            <div class="welcome-content h-100">
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center">
-                        <!-- Welcome Text -->
-                        <div class="col-12">
-                            <div class="welcome-text text-center">
-                                <h6 data-animation="fadeInUp" data-delay="200ms">Hotel &amp; Resort</h6>
-                                <h2 data-animation="fadeInUp" data-delay="500ms">Welcome To Roberto</h2>
-                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover
-                                    Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Single Welcome Slide -->
-        <div class="single-welcome-slide bg-img bg-overlay"
-             style="background-image: url({% static 'img/bg-img/18.jpg' %});"
-             data-img-url="{% static 'img/bg-img/18.jpg' %}">
-            <!-- Welcome Content -->
-            <div class="welcome-content h-100">
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center">
-                        <!-- Welcome Text -->
-                        <div class="col-12">
-                            <div class="welcome-text text-center">
-                                <h6 data-animation="fadeInDown" data-delay="200ms">Hotel &amp; Resort</h6>
-                                <h2 data-animation="fadeInDown" data-delay="500ms">Welcome To Roberto</h2>
-                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown"
-                                   data-delay="800ms">Discover Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 <!-- Welcome Area End -->
