@@ -2,26 +2,31 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from contents.models import Content
+from contents.models import Content, Menu
+
 from home.models import Setting, ContactFormu, ContactFormMessage, SliderPhoto
 from django.contrib import messages
 
 def index(request):
     setting = Setting.objects.get(pk=1)
-    sliderdata = SliderPhoto.objects.all()[:3]
+    sliderdata = Content.objects.all()[:3]
+    menu = Menu.objects.all()
     context = {'setting': setting,
+               'menu': menu,
                'page':'home',
                'sliderdata':sliderdata}
     return render(request, 'index.html', context)
 
 def hakkimizda(request):
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting}
+    menu = Menu.objects.all()
+    context = {'setting': setting,'menu': menu,}
     return render(request, 'hakkimizda.html', context)
 
 def referanslar(request):
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting}
+    menu = Menu.objects.all()
+    context = {'setting': setting,'menu': menu,}
     return render(request, 'referanslarimiz.html', context)
 
 
@@ -43,5 +48,6 @@ def iletisim(request):
 
     setting = Setting.objects.get(pk=1)
     form = ContactFormu()
-    context = {'setting': setting,'form':form}
+    menu = Menu.objects.all()
+    context = {'setting': setting,'form':form,'menu': menu,}
     return render(request, 'iletisim.html', context)

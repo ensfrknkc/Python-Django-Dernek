@@ -48,7 +48,7 @@
                 <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                     <!-- Logo -->
-                    <a class="nav-brand" href="index.html"><img src="{% static './img/core-img/logo.png' %}" alt=""></a>
+                    <a class="nav-brand" href="/"><img src="{% static './img/core-img/logo.png' %}" alt=""></a>
 
                     <!-- Navbar Toggler -->
                     <div class="classy-navbar-toggler">
@@ -63,30 +63,20 @@
                         </div>
                         <!-- Nav Start -->
                         <div class="classynav">
+
                             <ul id="nav">
-                                <li class="active"><a href="/">Anasayfa</a></li>
-                                <li><a href="/hakkimizda">Hakkımızda</a></li>
-                                <li><a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="./index.html">- Home</a></li>
-                                        <li><a href="./room.html">- Rooms</a></li>
-                                        <li><a href="./single-room.html">- Single Rooms</a></li>
-                                        <li><a href="./about.html">- About Us</a></li>
-                                        <li><a href="./blog.html">- Blog</a></li>
-                                        <li><a href="./single-blog.html">- Single Blog</a></li>
-                                        <li><a href="./contact.html">- Contact</a></li>
-                                        <li><a href="#">- Dropdown</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                            </ul>
+                            {% load mptt_tags %}
+                                    {% recursetree menu %}
+                                        <li><a href="/{{ node.slug }}">{{ node.title }}</a>
+                                            {% if not node.is_leaf_node %}
+                                                <ul class="dropdown">
+                                                    <li><a href="/{{ node.slug }}"> {{ children }}</a></li>
+                                                    {% if not node.is_leaf_node %}{% endif %}
+                                                </ul>
+                                            {% endif %}
                                         </li>
-                                    </ul>
-                                </li>
-                                <li><a href="/referanslar">Referanslarımız</a></li><!--Haberler blog.html yi kullansın-->
-                                <li><a href="/iletisim">İletişim</a></li>
+                                    {% endrecursetree %}
+
                             </ul>
 
                             <!-- Search -->
