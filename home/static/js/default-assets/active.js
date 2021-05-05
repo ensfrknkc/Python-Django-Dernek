@@ -232,7 +232,7 @@
     if ($.fn.scrollUp) {
         roberto_window.scrollUp({
             scrollSpeed: 1500,
-            scrollText: '<i class="fas fa-chevron-up"</i>'
+            scrollText: '<i class="arrow_carrot-up"</i>'
         });
     }
 

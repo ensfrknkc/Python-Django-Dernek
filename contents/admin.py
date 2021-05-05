@@ -12,12 +12,15 @@ class ContentImageInline(admin.TabularInline):
 
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['title', 'status']
+    readonly_fields = ('image_tag',)
     list_filter = ['status']
 
 
+
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ['title' , 'type', 'status','user']
+    list_display = ['title' , 'type', 'image_tag','status','user']
     list_filter = ['status' , 'type']
+    inlines = [ContentImageInline]
 
 
 class ImagesAdmin(admin.ModelAdmin):

@@ -1,0 +1,165 @@
+{% extends "homebase.html" %}
+
+{% load static %}
+{% block title %} {{ content.title }}{% endblock %}
+{% block keywords %}{{ content.keywords }}{% endblock %}
+{% block description %}{{ content.description }}{% endblock %}
+
+{% block favicon %} {{ setting.icon.url }}{% endblock %}
+
+
+
+{% block content %}
+
+    <!-- Breadcrumb Area Start -->
+    <div class="breadcrumb-area bg-img bg-overlay jarallax"
+         style="background-image: url({% static 'img/bg-img/16.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content text-center">
+                        <h2 class="page-title">{{ content.title }}</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ content.title }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End -->
+
+    <!-- Rooms Area Start -->
+    <div class="roberto-rooms-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <!-- Single Room Details Area -->
+                    <div class="single-room-details-area mb-50">
+                        <!-- Room Thumbnail Slides -->
+                        <div class="room-thumbnail-slides mb-50">
+                            <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="{{ content.image.url }}" class="d-block w-100 deneme" alt="">
+                                    </div>
+
+                                    {% for  rs in images %}
+                                        <div class="carousel-item">
+                                            <img src="{{ rs.image.url }}" class="d-block w-100" alt="">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <ol class="carousel-indicators">
+                                    <li data-target="#room-thumbnail--slide" data-slide-to="0" class="active">
+                                        <img src="{{ content.image.url }}" class="d-block w-100" alt="">
+                                    </li>
+                                    {% for  rs in images %}
+                                        <li data-target="#room-thumbnail--slide" data-slide-to="{{ forloop.counter }}">
+                                            <img src="{{ rs.image.url }}" class="d-block w-100" alt="">
+                                        </li>
+                                    {% endfor %}
+
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <h4 class="text-center">{{ content.title }}</h4>
+                    <p>{{ content.detail|safe }}</p>
+                </div>
+            </div>
+            <!-- Rooms Area End -->
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <!-- Room Review -->
+                        <div class="room-review-area mb-100">
+                            <h4> Review</h4>
+
+                            <!-- Single Review Area -->
+                            <div class="single-room-review-area d-flex align-items-center">
+                                <div class="reviwer-thumbnail">
+                                    <img src="img/bg-img/53.jpg" alt="">
+                                </div>
+                                <div class="reviwer-content">
+                                    <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
+                                        <div class="reviwer-title">
+                                            <span>27 Aug 2019</span>
+                                            <h6>Brandon Kelley</h6>
+                                        </div>
+                                        <div class="reviwer-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                        adipisci velit, sed quia non numquam eius modi tempora.</p>
+                                </div>
+                            </div>
+
+                            <!-- Single Review Area -->
+                            <div class="single-room-review-area d-flex align-items-center">
+                                <div class="reviwer-thumbnail">
+                                    <img src="img/bg-img/54.jpg" alt="">
+                                </div>
+                                <div class="reviwer-content">
+                                    <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
+                                        <div class="reviwer-title">
+                                            <span>27 Aug 2019</span>
+                                            <h6>Sounron Masha</h6>
+                                        </div>
+                                        <div class="reviwer-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                        adipisci velit, sed quia non numquam eius modi tempora.</p>
+                                </div>
+                            </div>
+
+                            <!-- Single Review Area -->
+                            <div class="single-room-review-area d-flex align-items-center">
+                                <div class="reviwer-thumbnail">
+                                    <img src="img/bg-img/55.jpg" alt="">
+                                </div>
+                                <div class="reviwer-content">
+                                    <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
+                                        <div class="reviwer-title">
+                                            <span>27 Aug 2019</span>
+                                            <h6>Amada Lyly</h6>
+                                        </div>
+                                        <div class="reviwer-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                        adipisci velit, sed quia non numquam eius modi tempora.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <h4> Yorum ekleme formu yapılacak</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
