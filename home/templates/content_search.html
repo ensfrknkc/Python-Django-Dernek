@@ -1,0 +1,64 @@
+{% extends "homebase.html" %}
+
+{% load static %}
+{% block title %} Content Search Result{% endblock %}
+{% block keywords %}{{setting.keywords}}{% endblock %}
+{% block description %}{{setting.description}}{% endblock %}
+
+{% block favicon %} {{ setting.icon.url }}{% endblock %}
+
+
+
+{% block content %}
+
+    <!-- Breadcrumb Area Start -->
+    <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({% static 'img/bg-img/16.jpg'%});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content text-center">
+                        <h2 class="page-title">SEARCH</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Content Search Result</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End -->
+
+     <!-- About Us Area Start -->
+    <section class="roberto-about-us-area ">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 ">
+                    {% for rs in contents %}
+                    <!-- Single Blog Post Area -->
+                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+                        <!-- Post Thumbnail -->
+                        <div class="post-thumbnail">
+                            <a href="/content/{{ rs.id }}/{{ rs.slug }}"><img src="{{ rs.image.url }}" alt=""></a>
+                        </div>
+                        <!-- Post Content -->
+                        <div class="post-content">
+                            <!-- Post Meta -->
+                            <div class="post-meta">
+                                <a href="#" class="post-author">{{ rs.update_at }}</a>
+                            </div>
+                            <!-- Post Title -->
+                            <a href="#" class="post-title">{{ rs.title }}</a>
+                            <p>{{ rs.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Us Area End -->
+
+{% endblock %}

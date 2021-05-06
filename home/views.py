@@ -2,16 +2,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from contents.models import Content, Menu,Images
+from contents.models import Content, Menu,Images,Comment
 
-from home.models import Setting, ContactFormu, ContactFormMessage, SliderPhoto
+from home.models import Setting, ContactFormu, ContactFormMessage
+from home.forms import SearchForm
 from django.contrib import messages
 
 def index(request):
     setting = Setting.objects.get(pk=1)
     sliderdata = Content.objects.all()[:3]
     menu = Menu.objects.all()
-    latestnews= Content.objects.all().order_by('menu_id','update_at')[:3]
+    latestnews= Content.objects.all().order_by('update_at')[:3]
 
     context = {'setting': setting,
                'menu': menu,
@@ -68,8 +69,28 @@ def content_detail(request,id,slug):
     menu = Menu.objects.all()
     content = Content.objects.get(pk=id)
     images = Images.objects.filter(content_id=id)
-    context = {'content':content,
+    comments = Comment.objects.filter(content_id=id,status='True')
+    context = {'content': content,
                'setting': setting,
                'menu': menu,
-               'images': images, }
+               'images': images,
+               'comments': comments}
     return render(request, 'content_detail.html', context)
+
+
+def content_search(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            setting = Setting.objects.get(pk=1)
+            menu = Menu.objects.all()
+            query = form.cleaned_data['query'] #formdaki bilgiyi al
+            contents = Content.objects.filter(title__icontains=query) #select * from content where title like %query%
+            #return HttpResponse(contents)
+            context = {'contents': contents,
+                       'menu': menu,
+                       'setting': setting,
+                       }
+            return render(request, 'content_search.html',context)
+
+    return HttpResponseRedirect('/')

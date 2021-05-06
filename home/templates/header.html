@@ -4,8 +4,9 @@
     <!-- Search Form -->
     <div class="search-form d-flex align-items-center">
         <div class="container">
-            <form action="index.html" method="get">
-                <input type="search" name="search-form-input" id="searchFormInput" placeholder="Type your keyword ...">
+            <form action="/search/" method="post">
+                {% csrf_token %}
+                <input type="search" name="query" id="query" placeholder="Type your keyword ...">
                 <button type="submit"><i class="icon_search"></i></button>
             </form>
         </div>

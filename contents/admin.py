@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from mptt.admin import MPTTModelAdmin, DraggableMPTTAdmin
 
-from contents.models import Menu, Content, Images
+from contents.models import Menu, Content, Images, Comment
 
 class ContentImageInline(admin.TabularInline):
     model = Images
@@ -18,7 +18,7 @@ class MenuAdmin(admin.ModelAdmin):
 
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ['title' , 'type', 'image_tag','status','user']
+    list_display = ['title','menu' , 'type', 'image_tag','status','user']
     list_filter = ['status' , 'type']
     inlines = [ContentImageInline]
 
@@ -60,10 +60,14 @@ class CategoryAdmin(DraggableMPTTAdmin):
         return instance.products_cumulative_count
     related_products_cumulative_count.short_description = 'Related Content (in tree)'
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['subject','comment','content','user','status']
+    list_filter = ['status']
 
 admin.site.register(Menu,CategoryAdmin)
 admin.site.register(Content,ContentAdmin)
 admin.site.register(Images,ImagesAdmin)
+admin.site.register(Comment,CommentAdmin)
 
 
 

@@ -35,20 +35,6 @@ class Setting(models.Model):
     def __str__(self):
         return self.title
 
-class SliderPhoto(models.Model):
-    STATUS = (
-        ('True', 'Evet'),
-        ('False', 'Hayır'),
-    )
-    title = models.CharField(max_length=100)
-    description = models.CharField(blank=True, max_length=255)
-    image = models.ImageField(blank=True, upload_to='images/')
-    slug = models.SlugField(blank=True, max_length=100)
-    status = models.CharField(blank=True,max_length=10, choices=STATUS)
-
-    def __str__(self):
-        return self.title
-
 class ContactFormMessage(models.Model):
     STATUS = (
         ('New', 'New'),

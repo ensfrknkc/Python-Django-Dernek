@@ -36,7 +36,7 @@
     <div class="roberto-rooms-area section-padding-100-0">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-12">
                     <!-- Single Room Details Area -->
                     <div class="single-room-details-area mb-50">
                         <!-- Room Thumbnail Slides -->
@@ -69,67 +69,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-12">
                     <h4 class="text-center">{{ content.title }}</h4>
                     <p>{{ content.detail|safe }}</p>
                 </div>
             </div>
+            <br>
             <!-- Rooms Area End -->
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <!-- Room Review -->
-                        <div class="room-review-area mb-100">
-                            <h4> Review</h4>
+                    <div class="room-review-area mb-100">
+                        <h4> Review</h4>
 
-                            <!-- Single Review Area -->
-                            <div class="single-room-review-area d-flex align-items-center">
-                                <div class="reviwer-thumbnail">
-                                    <img src="img/bg-img/53.jpg" alt="">
-                                </div>
-                                <div class="reviwer-content">
-                                    <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                        <div class="reviwer-title">
-                                            <span>27 Aug 2019</span>
-                                            <h6>Brandon Kelley</h6>
-                                        </div>
-                                        <div class="reviwer-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                        adipisci velit, sed quia non numquam eius modi tempora.</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Review Area -->
-                            <div class="single-room-review-area d-flex align-items-center">
-                                <div class="reviwer-thumbnail">
-                                    <img src="img/bg-img/54.jpg" alt="">
-                                </div>
-                                <div class="reviwer-content">
-                                    <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                        <div class="reviwer-title">
-                                            <span>27 Aug 2019</span>
-                                            <h6>Sounron Masha</h6>
-                                        </div>
-                                        <div class="reviwer-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                        adipisci velit, sed quia non numquam eius modi tempora.</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Review Area -->
+                        <!-- Single Review Area -->
+                        {% for rs in comments %}
                             <div class="single-room-review-area d-flex align-items-center">
                                 <div class="reviwer-thumbnail">
                                     <img src="img/bg-img/55.jpg" alt="">
@@ -137,26 +91,67 @@
                                 <div class="reviwer-content">
                                     <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
                                         <div class="reviwer-title">
-                                            <span>27 Aug 2019</span>
-                                            <h6>Amada Lyly</h6>
-                                        </div>
-                                        <div class="reviwer-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            <span>{{ rs.update_at }}</span>
+                                            <h6>{{ rs.user.first_name }}</h6>
                                         </div>
                                     </div>
-                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                        adipisci velit, sed quia non numquam eius modi tempora.</p>
+                                    <h6>{{ rs.subject }}</h6>
+                                    <p>{{ rs.content }}</p>
+                                    <div class="reviwer-rating">
+                                        <i class="fa fa-star{% if rs.rate < 1 %}-o empty{% endif %}"></i>
+                                        <i class="fa fa-star{% if rs.rate < 2 %}-o empty{% endif %}"></i>
+                                        <i class="fa fa-star{% if rs.rate < 3 %}-o empty{% endif %}"></i>
+                                        <i class="fa fa-star{% if rs.rate < 4 %}-o empty{% endif %}"></i>
+                                        <i class="fa fa-star{% if rs.rate < 5 %}-o empty{% endif %}"></i>
+                                    </div>
                                 </div>
                             </div>
+                        {% endfor %}
 
-                        </div>
+                    </div>
                 </div>
                 <div class="col-12 col-lg-6">
-                    <h4> Yorum ekleme formu yapılacak</h4>
+                    <h4> Review Form</h4>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="roberto-contact-form">
+                        <form action="/contents/addcomment/{{ content.id }}" method="post" class="rating">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12  wow fadeInUp" data-wow-delay="100ms">
+                                    <input type="text" name="subject" class="form-control mb-30" id="id_subject"
+                                           placeholder="Subject">
+                                </div>
+                                <div class="col-12 wow fadeInUp" data-wow-delay="100ms">
+                                    <textarea name="comment" class="form-control mb-30" id="id_comment"
+                                              placeholder="Your review"></textarea>
+                                </div>
+
+                                <div class="rating col-12 text-center wow fadeInUp">
+                                    <input type="radio" name="rate" value="5" id="5"><label for="5">☆</label>
+                                    <input type="radio" name="rate" value="4" id="4"><label for="4">☆</label>
+                                    <input type="radio" name="rate" value="3" id="3"><label for="3">☆</label>
+                                    <input type="radio" name="rate" value="2" id="2"><label for="2">☆</label>
+                                    <input type="radio" name="rate" value="1" id="1"><label for="1">☆</label>
+                                </div>
+
+                                <div class="col-12 text-center wow fadeInUp" data-wow-delay="100ms">
+                                    {% if  user.id is not None %}
+                                        <button type="submit" class="btn roberto-btn mt-15">Send Comment</button>
+                                    {% else %}
+                                        Yorum eklemek için Login olunuz!
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <br>
                 </div>
             </div>
         </div>
