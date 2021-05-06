@@ -17,11 +17,12 @@ class MenuAdmin(admin.ModelAdmin):
 
 
 
+
 class ContentAdmin(admin.ModelAdmin):
     list_display = ['title','menu' , 'type', 'image_tag','status','user']
     list_filter = ['status' , 'type']
     inlines = [ContentImageInline]
-
+    prepopulated_fields = {'slug': ('title',)}
 
 class ImagesAdmin(admin.ModelAdmin):
     list_display = ['title' , 'content', 'image_tag']
@@ -32,6 +33,7 @@ class CategoryAdmin(DraggableMPTTAdmin):
     list_display = ('tree_actions', 'indented_title',
                     'related_products_count', 'related_products_cumulative_count')
     list_display_links = ('indented_title',)
+    prepopulated_fields = {'slug': ('title',)}
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

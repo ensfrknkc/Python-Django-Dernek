@@ -71,15 +71,15 @@
                                 <li><a href="/referanslar">Referanslarımız</a></li>
 
                                 {% load mptt_tags %}
-                                    {% recursetree menu %}
-                                        <li><a href="/menu/{{ node.id }}/{{ node.slug }}">{{ node.title }}</a>
-                                            {% if not node.is_leaf_node %}
-                                                <ul class="dropdown">
-                                                    {{ children }}
-                                                </ul>
-                                            {% endif %}
-                                        </li>
-                                    {% endrecursetree %}
+                                {% recursetree menu %}
+                                    <li><a href="/menu/{{ node.id }}/{{ node.slug }}">{{ node.title }}</a>
+                                        {% if not node.is_leaf_node %}
+                                            <ul class="dropdown">
+                                                {{ children }}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endrecursetree %}
                                 <li><a href="/iletisim">İletişim</a></li>
                             </ul>
 
@@ -88,10 +88,27 @@
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </div>
 
-                            <!-- Book Now -->
-                            <div class="book-now-btn ml-3 ml-lg-5">
-                                <a href="#">Book Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                            <!-- Account -->
+                            <div class="ml-3 ml-lg-5">
+                                <div class="dropdown show">
+                                    {% if user.id is not None %}
+                                    <a class="btn  dropdown-toggle" href="#" role="button"
+                                       id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        {{ user.first_name}}
+                                    </a>
+                                    {% else %}
+                                        <a href="/login/">Login</a>
+                                        <strong>/</strong>
+                                        <a href="/join/">Join</a>
+                                    {% endif %}
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#"><i class="far fa-user"></i> My Account</a>
+                                        <a class="dropdown-item" href="/logout"><i class="fas fa-user-lock"></i> Logout</a>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- Account End-->
                         </div>
                         <!-- Nav End -->
                     </div>
@@ -101,3 +118,20 @@
     </div>
 </header>
 <!-- Header Area End -->
+<script>
+
+    $(function () {
+        $("#query").autocomplete({
+            source: "/search_auto/",
+            select: function (event, ui) { //item selected
+                AutoCompleteSelectHandler(event, ui)
+            },
+            minLength: 2,
+        });
+    });
+
+    function AutoCompleteSelectHandler(event, ui) {
+        var selectedObj = ui.item;
+    }
+
+</script>

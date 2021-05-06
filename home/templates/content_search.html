@@ -32,6 +32,7 @@
     <!-- Breadcrumb Area End -->
 
      <!-- About Us Area Start -->
+    <br>
     <section class="roberto-about-us-area ">
         <div class="container">
             <div class="row align-items-center">
@@ -50,7 +51,7 @@
                                 <a href="#" class="post-author">{{ rs.update_at }}</a>
                             </div>
                             <!-- Post Title -->
-                            <a href="#" class="post-title">{{ rs.title }}</a>
+                            <a href="/content/{{ rs.id }}/{{ rs.slug }}" class="post-title">{{ rs.title }}</a>
                             <p>{{ rs.description }}</p>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
+from django.contrib.auth import logout, authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-
+import json
 # Create your views here.
 from contents.models import Content, Menu,Images,Comment
 
@@ -94,3 +95,42 @@ def content_search(request):
             return render(request, 'content_search.html',context)
 
     return HttpResponseRedirect('/')
+
+def content_search_auto(request):
+  if request.is_ajax():
+    q = request.GET.get('term', '')
+    content = Content.objects.filter(title__icontains=q)
+    results = []
+    for rs in content:
+      content_json = {}
+      content_json = rs.title
+      results.append(content_json)
+    data = json.dumps(results)
+  else:
+    data = 'fail'
+  mimetype = 'application/json'
+  return HttpResponse(data, mimetype)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page.
+            return HttpResponseRedirect('/')
+        else:
+            messages.warning(request, "Login Hatası ! Kullanıcı adı yada Şifre hatalı.")
+            return HttpResponseRedirect('/login')
+
+    setting = Setting.objects.get(pk=1)
+    menu = Menu.objects.all()
+    context = { 'menu': menu,
+                'setting': setting,
+                }
+    return render(request, 'login.html', context)
