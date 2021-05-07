@@ -1,0 +1,82 @@
+{% extends "homebase.html" %}
+
+{% load static %}
+{% block title %} Sign Up-{{setting.company}}{% endblock %}
+{% block keywords %}{{setting.keywords}}{% endblock %}
+{% block description %}{{setting.description}}{% endblock %}
+
+{% block favicon %} {{ setting.icon.url }}{% endblock %}
+
+
+
+{% block content %}
+
+    <!-- Breadcrumb Area Start -->
+    <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({% static 'img/bg-img/16.jpg'%});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content text-center">
+                        <h2 class="page-title">Sign Up</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">User Sign Up</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End -->
+    <br>
+     <!-- Contact Form Area Start -->
+    <div class="roberto-contact-form-area ">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Section Heading -->
+                    <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
+                        <h6>SIGN-UP FORM</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="roberto-contact-form">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <p>
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small style="color: grey">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </p>
+                            {% endfor %}
+                            <input type="submit" class="btn roberto-btn mt-15" value="Sign Up">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+         <br>
+        </div>
+    </div>
+    <!-- Contact Form Area End -->
+
+
+{% endblock %}

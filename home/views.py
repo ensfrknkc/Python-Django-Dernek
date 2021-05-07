@@ -6,7 +6,7 @@ import json
 from contents.models import Content, Menu,Images,Comment
 
 from home.models import Setting, ContactFormu, ContactFormMessage
-from home.forms import SearchForm
+from home.forms import SearchForm, SignUpForm
 from django.contrib import messages
 
 def index(request):
@@ -134,3 +134,24 @@ def login_view(request):
                 'setting': setting,
                 }
     return render(request, 'login.html', context)
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = request.POST['username']
+            password = request.POST['password1']
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+            return HttpResponseRedirect('/')
+
+
+    form = SignUpForm()
+    setting = Setting.objects.get(pk=1)
+    menu = Menu.objects.all()
+    context = {'menu': menu,
+                'setting': setting,
+               'form': form,
+                }
+    return render(request, 'signup.html', context)
