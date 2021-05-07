@@ -18,8 +18,9 @@ def index(request):
     context = {'setting': setting,
                'menu': menu,
                'page':'home',
-               'sliderdata':sliderdata,
-               'latestnews':latestnews}
+               'sliderdata': sliderdata,
+               'latestnews': latestnews,
+              }
     return render(request, 'index.html', context)
 
 def hakkimizda(request):
@@ -144,6 +145,13 @@ def signup_view(request):
             password = request.POST['password1']
             user = authenticate(request, username=username, password=password)
             login(request, user)
+            #Create data in profile table for user
+            current_user = request.user
+            data = UserProfile()
+            data.user_id = current_user.id
+            data.image = "images/users/user.png"
+            data.save()
+            messages.success(request, "Hoşgeldiniz... Sitemize başarılı bir şekilde üye oldunuz.")
             return HttpResponseRedirect('/')
 
 

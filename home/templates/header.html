@@ -92,18 +92,19 @@
                             <div class="ml-3 ml-lg-5">
                                 <div class="dropdown show">
                                     {% if user.id is not None %}
-                                    <a class="btn  dropdown-toggle" href="#" role="button"
-                                       id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                       aria-expanded="false">
-                                        {{ user.first_name}}
-                                    </a>
+                                        <!--<img src="" alt="" height="50" width="50" >-->
+                                        <a class="btn  dropdown-toggle" href="#" role="button"
+                                           id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            {{ user.first_name }}
+                                        </a>
                                     {% else %}
                                         <a href="/login/">Login</a>
                                         <strong>/</strong>
                                         <a href="/signup/">Sign Up</a>
                                     {% endif %}
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#"><i class="far fa-user"></i> My Account</a>
+                                        <a class="dropdown-item" href="/user"><i class="far fa-user"></i> My Account</a>
                                         <a class="dropdown-item" href="/logout"><i class="fas fa-user-lock"></i> Logout</a>
                                     </div>
                                 </div>
