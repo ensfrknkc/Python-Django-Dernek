@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.forms import TextInput
+from django.forms.widgets import Input
 
 
 class SearchForm(forms.Form):
@@ -11,7 +13,7 @@ class SignUpForm(UserCreationForm):
         'placeholder': 'User Name',
         'class': 'form-control mb-30',
     }))
-    email = forms.EmailField(label='E-Mail', widget=forms.TextInput(attrs={
+    email = forms.EmailField(label='E-Mail', widget=forms.EmailInput(attrs={
         'placeholder': 'E-Mail',
         'class': 'form-control mb-30',
     }))
@@ -23,18 +25,18 @@ class SignUpForm(UserCreationForm):
         'placeholder': 'Last Name',
         'class': 'form-control mb-30',
     }))
-    password1 = forms.CharField(label='Password', widget=forms.TextInput(attrs={
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
         'placeholder': 'Password',
         'type': 'password',
         'class': 'form-control mb-30',
     }))
-    password2 = forms.CharField(label='Password Confirm', widget=forms.TextInput(attrs={
+    password2 = forms.CharField(label='Password Confirm', widget=forms.PasswordInput(attrs={
         'placeholder': 'Password Confirm',
         'type': 'password',
         'class': 'form-control mb-30',
     }))
 
 
-class Meta:
+    class Meta:
         model = User
-        fields = ('username', 'email','first_name','last_name', 'password1','password2',)
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2',)

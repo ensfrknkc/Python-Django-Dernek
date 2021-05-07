@@ -5,7 +5,7 @@ import json
 # Create your views here.
 from contents.models import Content, Menu,Images,Comment
 
-from home.models import Setting, ContactFormu, ContactFormMessage
+from home.models import Setting, ContactFormu, ContactFormMessage,UserProfile
 from home.forms import SearchForm, SignUpForm
 from django.contrib import messages
 
