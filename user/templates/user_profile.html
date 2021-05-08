@@ -37,42 +37,52 @@
     <div class="roberto-contact-form-area ">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     {% include "user_panel.html" %}
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <div class="section-heading wow fadeInUp" data-wow-delay="100ms">
                         <h6 class="text-center">USER INFORMATION</h6>
                     </div>
                     <div>
+                         {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                         <table class="table table-hover">
                             <tr>
-                                <th scope="row">Image</th>
-                                <td><img src="{{ profile.image.url }}" alt="" height="100" width="100" ></td>
+                                <th scope="row" class="align-middle">
+                                    <a href="/user/update/" class="btn btn-primary ">Update Profile</a>
+                                    <a href="/user/password/" class="btn btn-primary ">Change Password</a>
+                                </th>
+                                <td class="align-middle"><img src="{{ profile.image.url }}" alt="" height="100" width="100" ></td>
+                            </tr>
+                            <tr >
+                                <th scope="col" class="align-middle">Nane Surname</th>
+                                <td class="align-middle">{{ profile.user_name }}</td>
                             </tr>
                             <tr>
-                                <th scope="col">Nane Surname</th>
-                                <td>{{ profile.user_name }}</td>
+                                <th scope="col" class="align-middle">Email</th>
+                                <td class="align-middle">{{ profile.user.email }}</td>
                             </tr>
                             <tr>
-                                <th scope="col">Email</th>
-                                <td>{{ profile.user.email }}</td>
+                                <th scope="col" class="align-middle">Phone</th>
+                                <td class="align-middle">{{ profile.phone }}</td>
                             </tr>
                             <tr>
-                                <th scope="col">Phone</th>
-                                <td>{{ profile.phone }}</td>
+                                <th scope="col" class="align-middle">Address</th>
+                                <td class="align-middle"> {{ profile.address }}</td>
                             </tr>
                             <tr>
-                                <th scope="col">Address</th>
-                                <td>{{ profile.address }}</td>
+                                <th scope="col" class="align-middle">City</th>
+                                <td class="align-middle">{{ profile.city }}</td>
                             </tr>
                             <tr>
-                                <th scope="col">City</th>
-                                <td>{{ profile.city }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="col">Country</th>
-                                <td>{{ profile.country }}</td>
+                                <th scope="col" class="align-middle">Country</th>
+                                <td class="align-middle">{{ profile.country }}</td>
                             </tr>
                         </table>
                     </div>
