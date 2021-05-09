@@ -1,0 +1,96 @@
+{% extends "homebase.html" %}
+
+{% load static %}
+{% block title %} {{ setting.title }} Profile{% endblock %}
+{% block keywords %}{{ setting.keywords }}{% endblock %}
+{% block description %}{{ setting.description }}{% endblock %}
+
+{% block favicon %} {{ setting.icon.url }}{% endblock %}
+
+
+
+{% block content %}
+
+    <!-- Breadcrumb Area Start -->
+    <div class="breadcrumb-area bg-img bg-overlay jarallax"
+         style="background-image: url({% static 'img/bg-img/16.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content text-center">
+                        <h2 class="page-title">User Comments</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">User Comments</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End -->
+
+    <!-- Contact Form Area Start -->
+    <br>
+    <div class="roberto-contact-form-area ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    {% include "user_panel.html" %}
+                </div>
+                <div class="col-md-10">
+                    <div class="section-heading wow fadeInUp" data-wow-delay="100ms">
+                        <h6 class="text-center">USER COMMENTS</h6>
+                    </div>
+                    <div>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Content</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Comment</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Detail</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for rs in comments %}
+                                <tr>
+                                    <th class="align-middle">
+                                        <a href="/content/{{ rs.content_id }}/{{ rs.content.slug }}"><strong>{{ rs.content.title }}</strong></a>
+                                    </th>
+                                    <td class="align-middle">{{ rs.rate }}</td>
+                                    <td class="align-middle">{{ rs.subject }}</td>
+                                    <td class="align-middle">{{ rs.comment }}</td>
+                                    <td class="align-middle">{{ rs.status }}</td>
+                                    <td class="align-middle">{{ rs.create_at }}</td>
+                                    <td class="align-middle"><a class="btn btn-primary"
+                                                                href="/user/deletecomment/{{ rs.id }}"
+                                                                onclick="return confirm('Will be Delete ! Are you sure?')">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <!-- Contact Form Area End -->
+
+
+{% endblock %}

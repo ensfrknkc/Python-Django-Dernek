@@ -86,7 +86,7 @@
                         {% for rs in comments %}
                             <div class="single-room-review-area d-flex align-items-center">
                                 <div class="reviwer-thumbnail">
-                                    <img src="{{ rs.user.image }}" alt="">
+                                    <img src="{{ rs.user.userprofile.image.url }}" alt="">
                                 </div>
                                 <div class="reviwer-content">
                                     <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
@@ -96,7 +96,7 @@
                                         </div>
                                     </div>
                                     <h6>{{ rs.subject }}</h6>
-                                    <p>{{ rs.content }}</p>
+                                    <p>{{ rs.comment }}</p>
                                     <div class="reviwer-rating">
                                         <i class="fa fa-star{% if rs.rate < 1 %}-o empty{% endif %}"></i>
                                         <i class="fa fa-star{% if rs.rate < 2 %}-o empty{% endif %}"></i>

@@ -92,6 +92,7 @@
                             <div class="ml-3 ml-lg-5">
                                 <div class="dropdown show">
                                     {% if user.id is not None %}
+                                        <img src="{{ user.userprofile.image.url }}" alt="" style="height:50px; border-radius: 45px">
                                         <!--<img src="" alt="" height="50" width="50" >-->
                                         <a class="btn  dropdown-toggle" href="#" role="button"
                                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
