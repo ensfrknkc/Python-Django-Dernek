@@ -17,21 +17,21 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-6">
+                <div class="col-8">
                     <div class="top-header-content">
-                        <a href="#"><i class="icon_phone"></i> <span>(123) 456-789-1230</span></a>
-                        <a href="#"><i class="icon_mail"></i> <span>info.colorlib@gmail.com</span></a>
+                        <a href="tel:0{{setting.phone}}"><i class="icon_phone"></i> <span>{{setting.phone}}</span></a>
+                        <a href="mailto:{{setting.email}}"><i class="icon_mail"></i> <span>{{setting.email}}</span></a>
+                        <a href="/sss"><i class="far fa-question-circle"></i>Sıkca Sorulan Sorular</a>
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-4">
                     <div class="top-header-content">
                         <!-- Top Social Area -->
                         <div class="top-social-area ml-auto">
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="{{setting.facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="{{setting.twitter}}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="{{setting.instagram}}"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
@@ -105,8 +105,10 @@
                                         <a href="/signup/">Sign Up</a>
                                     {% endif %}
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="/user"><i class="far fa-user"></i> My Account</a>
-                                        <a class="dropdown-item" href="/logout"><i class="fas fa-user-lock"></i> Logout</a>
+                                        <a class="dropdown-item" href="/user"><i class="far fa-address-card"></i> Hesap Bilgileri</a>
+                                        <a class="dropdown-item" href="/user/comments"><i class="far fa-comment"></i> Yorumlar</a>
+                                        <a class="dropdown-item" href="/user/contents"><i class="fas fa-align-justify"></i> İçerikler</a>
+                                        <a class="dropdown-item" href="/logout"><i class="fas fa-user-lock"></i> Çıkış</a>
                                     </div>
                                 </div>
                             </div>

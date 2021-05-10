@@ -19,7 +19,7 @@ class MenuAdmin(admin.ModelAdmin):
 
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ['title','menu' , 'type', 'image_tag','status','user']
+    list_display = ['title','menu' , 'type','image_tag','status','user']
     list_filter = ['status' , 'type']
     inlines = [ContentImageInline]
     prepopulated_fields = {'slug': ('title',)}

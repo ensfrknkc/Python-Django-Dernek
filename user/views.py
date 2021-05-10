@@ -4,13 +4,13 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from contents.models import Menu
+from contents.models import Menu, ContentForm
 from home.models import Setting, UserProfile
 
 
 # Create your views here.
 from user.forms import UserUpdateForm, ProfileUpdateForm
-from contents.models import Comment
+from contents.models import Comment, Content
 
 
 def index(request):
@@ -89,3 +89,83 @@ def deletecomment(request,id):
     Comment.objects.filter(id=id, user_id=current_user.id).delete()
     messages.success(request, 'Comment deleted...')
     return HttpResponseRedirect('/user/comments')
+
+
+@login_required(login_url='/login') #check login
+def contents(request):
+    menu = Menu.objects.all()
+    setting = Setting.objects.get(pk=1)
+    current_user = request.user
+    contents = Content.objects.filter(user_id=current_user.id)
+    context = {
+        'menu' : menu,
+        'setting' : setting,
+        'contents' : contents,
+    }
+    return render(request, 'user_contents.html', context)
+
+
+@login_required(login_url='/login') #check login
+def addcontent(request):
+    if request.method == 'POST':
+        form = ContentForm(request.POST, request.FILES)
+        if form.is_valid():
+            current_user = request.user
+            data = Content() # model ile bağlantı kur
+            data.user_id = current_user.id
+            data.title = form.cleaned_data['title']
+            data.keywords = form.cleaned_data['keywords']
+            data.description = form.cleaned_data['description']
+            data.image = form.cleaned_data['image']
+            data.type = form.cleaned_data['type']
+            data.slug = form.cleaned_data['slug']
+            data.detail = form.cleaned_data['detail']
+            data.status = 'False'
+            data.save() #veritabanına kaydet
+            messages.success(request, 'Your Content Insterted Successfuly')
+            return HttpResponseRedirect('/user/contents')
+        else:
+            messages.warning(request, 'Your ContentForm Error :' + str(form.errors))
+            return HttpResponseRedirect('/user/addcontent')
+    else:
+        menu = Menu.objects.all()
+        setting = Setting.objects.get(pk=1)
+        form = ContentForm()
+        context = {
+            'menu': menu,
+            'setting': setting,
+            'form': form,
+        }
+        return render(request, 'user_addcontent.html', context)
+
+
+@login_required(login_url='/login') #check login
+def contentedit(request,id):
+    content = Content.objects.get(id=id)
+    if request.method == 'POST':
+        form = ContentForm(request.POST, request.FILES, instance=content)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your Content Updated Successfuly')
+            return HttpResponseRedirect('/user/contents')
+        else:
+            messages.warning(request, 'Content Form Error :' + str(form.errors))
+            return HttpResponseRedirect('/user/addcontent')
+    else:
+        menu = Menu.objects.all()
+        setting = Setting.objects.get(pk=1)
+        form = ContentForm(instance=content)
+        context = {
+            'menu': menu,
+            'setting': setting,
+            'form': form,
+        }
+        return render(request, 'user_addcontent.html', context)
+
+
+@login_required(login_url='/login') #check login
+def contentdelete(request,id):
+    current_user = request.user
+    Content.objects.filter(id=id, user_id=current_user.id).delete()
+    messages.success(request, 'Content deleted...')
+    return HttpResponseRedirect('/user/contents')

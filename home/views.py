@@ -5,21 +5,26 @@ import json
 # Create your views here.
 from contents.models import Content, Menu,Images,Comment
 
-from home.models import Setting, ContactFormu, ContactFormMessage,UserProfile
+from home.models import Setting, ContactFormu, ContactFormMessage, UserProfile, FAQ
 from home.forms import SearchForm, SignUpForm
 from django.contrib import messages
 
 def index(request):
     setting = Setting.objects.get(pk=1)
     sliderdata = Content.objects.all()[:3]
+    news = Content.objects.filter(type='News', status='True').order_by('-id')[:5]
+    notice = Content.objects.filter(type='Notice', status='True').order_by('-id')[:5]
+    comments = Comment.objects.filter(status='True').order_by('update_at')[:3]
     menu = Menu.objects.all()
-    latestnews= Content.objects.all().order_by('update_at')[:3]
+    latestnews= Content.objects.all().filter(type='News', status='True').order_by('update_at')[:3]
 
     context = {'setting': setting,
                'menu': menu,
-               'page':'home',
                'sliderdata': sliderdata,
                'latestnews': latestnews,
+               'news': news,
+               'notice': notice,
+               'comments': comments,
               }
     return render(request, 'index.html', context)
 
@@ -71,7 +76,7 @@ def content_detail(request,id,slug):
     menu = Menu.objects.all()
     content = Content.objects.get(pk=id)
     images = Images.objects.filter(content_id=id)
-    comments = Comment.objects.filter(content_id=id,status='True')
+    comments = Comment.objects.filter(content_id=id, status='True')
     context = {'content': content,
                'setting': setting,
                'menu': menu,
@@ -163,3 +168,14 @@ def signup_view(request):
                'form': form,
                 }
     return render(request, 'signup.html', context)
+
+
+def faq(request):
+    setting = Setting.objects.get(pk=1)
+    menu = Menu.objects.all()
+    faq = FAQ.objects.all().order_by('ordernumber')
+    context = {'menu': menu,
+               'setting': setting,
+               'faq': faq,
+               }
+    return render(request, 'faq.html', context)

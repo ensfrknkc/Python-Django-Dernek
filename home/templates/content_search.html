@@ -52,7 +52,7 @@
                             </div>
                             <!-- Post Title -->
                             <a href="/content/{{ rs.id }}/{{ rs.slug }}" class="post-title">{{ rs.title }}</a>
-                            <p>{{ rs.description }}</p>
+                            <p>{{ rs.detail|safe }}</p>
                         </div>
                     </div>
                     {% endfor %}
