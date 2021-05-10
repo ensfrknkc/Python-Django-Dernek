@@ -4,9 +4,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from contents.models import Menu, ContentForm
+from contents.models import Menu, ContentForm, ContentImageForm, Images
 from home.models import Setting, UserProfile
-
 
 # Create your views here.
 from user.forms import UserUpdateForm, ProfileUpdateForm
@@ -27,8 +26,8 @@ def index(request):
 
 def user_update(request):
     if request.method == 'POST':
-        user_form = UserUpdateForm(request.POST, instance=request.user) #request.user is user data
-        #"instance=request.user.userprofile" comes from "userprofile" model -> OneToOneField relation
+        user_form = UserUpdateForm(request.POST, instance=request.user)  # request.user is user data
+        # "instance=request.user.userprofile" comes from "userprofile" model -> OneToOneField relation
         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.userprofile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
@@ -39,12 +38,13 @@ def user_update(request):
         menu = Menu.objects.all()
         setting = Setting.objects.get(pk=1)
         user_form = UserUpdateForm(instance=request.user)
-        profile_form = ProfileUpdateForm(instance=request.user.userprofile) #"userprofile" model->OneToOneField relation with user
+        profile_form = ProfileUpdateForm(
+            instance=request.user.userprofile)  # "userprofile" model->OneToOneField relation with user
         context = {
-            'menu' : menu,
-            'user_form' : user_form,
-            'profile_form' : profile_form,
-            'setting' : setting,
+            'menu': menu,
+            'user_form': user_form,
+            'profile_form': profile_form,
+            'setting': setting,
         }
         return render(request, 'user_update.html', context)
 
@@ -54,11 +54,11 @@ def change_password(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user) #important
+            update_session_auth_hash(request, user)  # important
             messages.success(request, 'Your password was successfully updated!')
             return redirect('change_password')
         else:
-            messages.warning(request, 'Please correct the error below.'+ str(form.errors))
+            messages.warning(request, 'Please correct the error below.' + str(form.errors))
             return HttpResponseRedirect('/user/password')
     else:
         menu = Menu.objects.all()
@@ -69,49 +69,49 @@ def change_password(request):
         })
 
 
-@login_required(login_url='/login') #check login
+@login_required(login_url='/login')  # check login
 def comments(request):
     menu = Menu.objects.all()
     setting = Setting.objects.get(pk=1)
     current_user = request.user
     comments = Comment.objects.filter(user_id=current_user.id)
     context = {
-        'menu' : menu,
-        'setting' : setting,
-        'comments' : comments,
+        'menu': menu,
+        'setting': setting,
+        'comments': comments,
     }
     return render(request, 'user_comments.html', context)
 
 
-@login_required(login_url='/login') #check login
-def deletecomment(request,id):
+@login_required(login_url='/login')  # check login
+def deletecomment(request, id):
     current_user = request.user
     Comment.objects.filter(id=id, user_id=current_user.id).delete()
     messages.success(request, 'Comment deleted...')
     return HttpResponseRedirect('/user/comments')
 
 
-@login_required(login_url='/login') #check login
+@login_required(login_url='/login')  # check login
 def contents(request):
     menu = Menu.objects.all()
     setting = Setting.objects.get(pk=1)
     current_user = request.user
     contents = Content.objects.filter(user_id=current_user.id)
     context = {
-        'menu' : menu,
-        'setting' : setting,
-        'contents' : contents,
+        'menu': menu,
+        'setting': setting,
+        'contents': contents,
     }
     return render(request, 'user_contents.html', context)
 
 
-@login_required(login_url='/login') #check login
+@login_required(login_url='/login')  # check login
 def addcontent(request):
     if request.method == 'POST':
         form = ContentForm(request.POST, request.FILES)
         if form.is_valid():
             current_user = request.user
-            data = Content() # model ile bağlantı kur
+            data = Content()  # model ile bağlantı kur
             data.user_id = current_user.id
             data.title = form.cleaned_data['title']
             data.keywords = form.cleaned_data['keywords']
@@ -121,7 +121,7 @@ def addcontent(request):
             data.slug = form.cleaned_data['slug']
             data.detail = form.cleaned_data['detail']
             data.status = 'False'
-            data.save() #veritabanına kaydet
+            data.save()  # veritabanına kaydet
             messages.success(request, 'Your Content Insterted Successfuly')
             return HttpResponseRedirect('/user/contents')
         else:
@@ -139,8 +139,8 @@ def addcontent(request):
         return render(request, 'user_addcontent.html', context)
 
 
-@login_required(login_url='/login') #check login
-def contentedit(request,id):
+@login_required(login_url='/login')  # check login
+def contentedit(request, id):
     content = Content.objects.get(id=id)
     if request.method == 'POST':
         form = ContentForm(request.POST, request.FILES, instance=content)
@@ -163,9 +163,40 @@ def contentedit(request,id):
         return render(request, 'user_addcontent.html', context)
 
 
-@login_required(login_url='/login') #check login
-def contentdelete(request,id):
+@login_required(login_url='/login')  # check login
+def contentdelete(request, id):
     current_user = request.user
     Content.objects.filter(id=id, user_id=current_user.id).delete()
     messages.success(request, 'Content deleted...')
     return HttpResponseRedirect('/user/contents')
+
+
+def contentaddimage(request, id):
+    if request.method == 'POST':
+        lasturl = request.META.get('HTTP_REFERER')
+        form = ContentImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = Images()  # model ile bağlantı kur
+            data.title = form.cleaned_data['title']
+            data.content_id = id
+            data.image = form.cleaned_data['image']
+            data.save()  # veritabanına kaydet
+            messages.success(request, 'Your image has been Successfuly uploaded')
+            return HttpResponseRedirect(lasturl)
+        else:
+            messages.warning(request, 'Form Error :' + str(form.errors))
+            return HttpResponseRedirect(lasturl)
+    else:
+        content = Content.objects.get(id=id)
+        images = Images.objects.filter(content_id=id)
+        menu = Menu.objects.all()
+        setting = Setting.objects.get(pk=1)
+        form = ContentImageForm()
+        context = {
+            'content': content,
+            'images': images,
+            'menu': menu,
+            'setting': setting,
+            'form': form,
+        }
+        return render(request, 'content_gallery.html', context)
