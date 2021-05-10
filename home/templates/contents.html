@@ -38,25 +38,27 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
 
-                    {% for rs in contents %}
+
                     <!-- Single Blog Post Area -->
                     <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
                         <!-- Post Thumbnail -->
                         <div class="post-thumbnail">
-                            <a href="#"><img src="{{ rs.image.url }}" alt=""></a>
+                            <a href="#"><img src="{{ content.image.url }}" alt=""></a>
                         </div>
                         <!-- Post Content -->
                         <div class="post-content">
                             <!-- Post Meta -->
                             <div class="post-meta">
-                                <a href="#" class="post-author">{{ rs.update_at }}</a>
+                                <a href="#" class="post-author">{{ content.update_at }}</a>
                             </div>
                             <!-- Post Title -->
                             <a href="#" class="post-title">{{ rs.title }}</a>
-                            <p>{{ rs.description }}</p>
+                            <p>{{ content.description }}</p>
+                            <p>{{ content.detail|safe }}</p>
                         </div>
                     </div>
-                    {% endfor %}
+
+
 
                 </div>
             </div>

@@ -67,8 +67,8 @@ def menu_contents(request,id,slug):
     setting = Setting.objects.get(pk=1)
     menu = Menu.objects.all()
     menudata = Menu.objects.get(pk = id)
-    contents = Content.objects.filter(menu_id=id)
-    context = {'contents': contents,'setting': setting,'menu': menu,'menudata':menudata}
+    content = Content.objects.get(menu_id=id)
+    context = {'content': content,'setting': setting,'menu': menu,'menudata':menudata}
     return render(request, 'contents.html', context)
 
 def content_detail(request,id,slug):
